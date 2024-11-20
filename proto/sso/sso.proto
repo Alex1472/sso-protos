@@ -4,7 +4,8 @@
 // .proto files reside
 syntax = "proto3";
 
-package auth; // just namespace. Has no influence on package and path of generated files
+package auth; // just namespace.
+// Has no influence on package and path of generated files
 
 // it seems only ssov1 used to name package for generated files
 // places where to generate files are specified in protoc command
