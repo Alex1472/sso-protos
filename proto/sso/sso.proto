@@ -1,0 +1,45 @@
+//  protoc -I proto proto/sso/sso.proto --go_out=./gen/go/ --go_opt=paths=source_relative --go-grpc_out=./gen/go/ --go-grpc_opt=paths=source_relative
+// --go_out and --go-grpc_out - generate types for protobuf and grpc to this directories
+// --go_opt=paths=source_relative and --go-grpc_opt=paths=source_relative - create the same structure before generated files as where
+// .proto files reside
+syntax = "proto3";
+
+package auth; // just namespace. Has no influence on package and path of generated files
+
+// it seems only ssov1 used to name package for generated files
+// places where to generate files are specified in protoc command
+option go_package = "gen/go;ssov1";
+
+service Auth {
+  rpc Register(RegisterRequest) returns (RegisterResponse);
+  rpc Login(LoginRequest) returns (LoginResponse);
+  rpc IsAdmin(IsAdminRequest) returns (IsAdminResponse);
+}
+
+message RegisterRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message RegisterResponse {
+  int64 user_id = 1;
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+  int64 app_id = 3;
+}
+
+message LoginResponse {
+  string token = 1;
+}
+
+message IsAdminRequest {
+  int64 user_id = 1;
+}
+
+message IsAdminResponse {
+  bool is_admin = 1;
+}
+
